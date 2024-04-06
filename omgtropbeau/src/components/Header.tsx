@@ -4,12 +4,14 @@ interface Props {
   name: string;
 }
 
-const Cards: React.FC<Props> = ({ name }) => {
+const Header: React.FC<Props> = ({ name }) => {
   return (
-    <header className=''>
-      {name}
+    <header className='min-h-fit h-16 bg-white rounded-lg flex justify-center items-center'>
+      <h1 className='text-4xl text-center'>
+        {name}
+      </h1>
     </header>
   );
 };
 
-export default Cards;
+export default Header;
