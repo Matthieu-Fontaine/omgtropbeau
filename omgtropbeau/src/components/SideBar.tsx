@@ -10,7 +10,7 @@ import logoutSVG from '../assets/logout.svg';
 const SideBar: React.FC = () => {
   return (
     <div>
-      <nav className='w-60 h-96 bg-white rounded-lg m-2'>
+      <nav className='w-60 h-96 bg-white rounded-lg ml-2'>
         <ul className='space-y-2 p-2'>
           <li className='rounded-md pr-4 my-2 mx-5 items-center hover:bg-admin-light-blue hover:text-admin-blue'>
             <Link to='/' className='flex items-center'>
