@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: no
+    environment:
+      POSTGRES_USER: matthieu
+      POSTGRES_PASSWORD: 55D7TC^Ym3MJa#S2L^9%
+      POSTGRES_DB: omgtropbeau
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: no
+    environment:
+      PGADMIN_DEFAULT_EMAIL: matth76330@live.fr
+      PGADMIN_DEFAULT_PASSWORD: KNvgCUDTyiq98uTRE
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./pgadmin_config:/root/.pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin_data:
