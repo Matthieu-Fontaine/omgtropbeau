@@ -1,12 +1,11 @@
 import express, { Request, Response } from 'express';
 import {
   getUserController
-}
-  from '../controllers/user.controllers';
+} from '../controllers/user.controllers';
 
 const customerRouter = express.Router();
 
-customerRouter.get('/', async (req: Request, res: Response) => {
+customerRouter.get('/:id', async (req: Request, res: Response) => {
   return await getUserController(req, res);
 });
 

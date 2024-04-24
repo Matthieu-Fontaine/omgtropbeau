@@ -5,7 +5,7 @@ async function getUserController(req: Request, res: Response) {
   const id = parseInt(req.params.id);
   const user = await User.findOne({
     where: {
-      id_user: id
+      id: id
     }
   })
     .catch((err: any) => {

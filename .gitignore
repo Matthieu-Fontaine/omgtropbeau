@@ -1,3 +1,4 @@
 /backend-omgtropbeau/node_modules
 /pgadmin_config
 /pgdata
+/docker-omgtropbeau/pgdata

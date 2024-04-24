@@ -3,7 +3,7 @@ import User from '../models/user.model'; // Assurez-vous que le chemin vers le m
 async function getUser(id: number) {
   const c = await User.findOne({
     where: {
-      id_user: id
+      id: id
     }
   })
     .catch((err: any) => {
