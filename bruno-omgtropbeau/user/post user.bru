@@ -1,0 +1,19 @@
+meta {
+  name: post user
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{dev-ip}}users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "matthieu",
+    "email": "matth76330@live.fr",
+    "password": "pswd"
+  }
+}

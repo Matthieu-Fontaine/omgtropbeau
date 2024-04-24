@@ -12,4 +12,52 @@ async function getUser(id: number) {
   return c;
 }
 
-export { getUser };
+async function getUsers() {
+  const c = await User.findAll()
+    .catch((err: any) => {
+      throw err;
+    });
+  return c;
+}
+
+async function postUser(user: User) {
+  const c = await User.create({
+    username: user.username,
+    email: user.email,
+    password: user.password
+  })
+    .catch((err: any) => {
+      throw err;
+    });
+  return c;
+}
+
+async function patchUser(id: number, user: Partial<User>) {
+  const c = await User.update({
+    username: user.username,
+    email: user.email,
+    password: user.password
+  }, {
+    where: {
+      id: id
+    }
+  })
+    .catch((err: any) => {
+      throw err;
+    });
+  return c;
+}
+
+async function deleteUser(id: number) {
+  const c = await User.destroy({
+    where: {
+      id: id
+    }
+  })
+    .catch((err: any) => {
+      throw err;
+    });
+  return c;
+}
+
+export { getUser, getUsers, postUser, patchUser, deleteUser };

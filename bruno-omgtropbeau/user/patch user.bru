@@ -1,0 +1,18 @@
+meta {
+  name: patch user
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{dev-ip}}users/8
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "matthieu",
+    "password": "password"
+  }
+}
