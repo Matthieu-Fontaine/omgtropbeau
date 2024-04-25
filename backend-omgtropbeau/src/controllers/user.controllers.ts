@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
-import { getUser, getUsers, postUser, patchUser, deleteUser } from '../services/user.services';
+import { getUserById, getUserByEmail, getUsers, postUser, patchUser, deleteUser } from '../services/user.services';
 
-async function getUserController(req: Request, res: Response) {
+// TODO : Updgrade error message
+
+async function getUserByIdController(req: Request, res: Response) {
   const id = parseInt(req.params.id);
-  const user = await getUser(id)
+  const user = await getUserById(id)
     .catch((err: any) => {
       return res.status(500).json(err);
     });
@@ -11,11 +13,19 @@ async function getUserController(req: Request, res: Response) {
 }
 
 async function getUsersController(req: Request, res: Response) {
-  const users = await getUsers()
-    .catch((err: any) => {
-      return res.status(500).json(err);
-    });
-  return res.status(200).json(users);
+  if (req.query.email) {
+    const user = await getUserByEmail(req.query.email as string)
+      .catch((err: any) => {
+        return res.status(500).json(err);
+      });
+    return res.status(200).json(user);
+  } else {
+    const users = await getUsers()
+      .catch((err: any) => {
+        return res.status(500).json(err);
+      });
+    return res.status(200).json(users);
+  }
 }
 
 async function postUserController(req: Request, res: Response) {
@@ -47,7 +57,7 @@ async function deleteUserController(req: Request, res: Response) {
 }
 
 export {
-  getUserController,
+  getUserByIdController,
   getUsersController,
   postUserController,
   patchUserController,

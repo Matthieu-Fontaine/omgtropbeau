@@ -1,9 +1,17 @@
 import User from '../models/user.model'; // Assurez-vous que le chemin vers le modèle est correct
 
-async function getUser(id: number) {
+async function getUserById(id: number) {
+  const c = await User.findByPk(id)
+    .catch((err: any) => {
+      throw err;
+    });
+  return c;
+}
+
+async function getUserByEmail(email: string) {
   const c = await User.findOne({
     where: {
-      id: id
+      email: email
     }
   })
     .catch((err: any) => {
@@ -60,4 +68,4 @@ async function deleteUser(id: number) {
   return c;
 }
 
-export { getUser, getUsers, postUser, patchUser, deleteUser };
+export { getUserById, getUserByEmail, getUsers, postUser, patchUser, deleteUser };

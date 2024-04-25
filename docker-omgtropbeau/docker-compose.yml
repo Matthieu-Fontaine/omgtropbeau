@@ -6,7 +6,7 @@ services:
     restart: no
     environment:
       POSTGRES_USER: matthieu
-      POSTGRES_PASSWORD: 55D7TC^Ym3MJa#S2L^9%
+      POSTGRES_PASSWORD: 55D7TCYm3MJaS2L9
       POSTGRES_DB: omgtropbeau
     ports:
       - "5432:5432"

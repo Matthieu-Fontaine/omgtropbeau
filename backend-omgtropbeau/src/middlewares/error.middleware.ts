@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
+// TODO : Clarify and implement error handling
+
 const errorMiddleware = (error: any, req: Request, res: Response, next: NextFunction) => {
   console.error(error);
 

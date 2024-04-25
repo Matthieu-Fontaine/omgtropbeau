@@ -2,3 +2,4 @@
 /pgadmin_config
 /pgdata
 /docker-omgtropbeau/pgdata
+backend-omgtropbeau/.env

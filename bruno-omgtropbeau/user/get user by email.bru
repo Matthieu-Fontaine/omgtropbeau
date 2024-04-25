@@ -1,0 +1,15 @@
+meta {
+  name: get user by email
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{dev-ip}}users?email=matth76330@live.fr
+  body: none
+  auth: none
+}
+
+query {
+  email: matth76330@live.fr
+}

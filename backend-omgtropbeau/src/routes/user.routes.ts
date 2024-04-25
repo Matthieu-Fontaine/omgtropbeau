@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import {
-  getUserController,
+  getUserByIdController,
   getUsersController,
   postUserController,
   patchUserController,
@@ -10,7 +10,7 @@ import {
 const customerRouter = express.Router();
 
 customerRouter.get('/:id', async (req: Request, res: Response) => {
-  return await getUserController(req, res);
+  return await getUserByIdController(req, res);
 });
 
 customerRouter.get('/', async (req: Request, res: Response) => {

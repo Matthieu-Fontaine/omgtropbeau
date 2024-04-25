@@ -1,17 +1,18 @@
 meta {
-  name: patch user
+  name: get Token
   type: http
-  seq: 5
+  seq: 1
 }
 
-patch {
-  url: {{dev-ip}}users/3
+post {
+  url: {{dev-ip}}auth/login
   body: json
   auth: none
 }
 
 body:json {
   {
+    "email": "matth76330@live.fr",
     "password": "password"
   }
 }
