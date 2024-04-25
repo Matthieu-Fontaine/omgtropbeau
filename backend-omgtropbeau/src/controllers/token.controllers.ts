@@ -4,42 +4,34 @@ import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
 import User from '../models/user.model';
 import Token from '../models/token.model';
 
+import { InvalidRequest, DatabaseError, NoResultError, UnauthorizedError } from '../middlewares/error.middleware';
+import { SuccessRequested } from '../middlewares/success.middleware';
+
 import { getUserByEmail } from '../services/user.services';
 import { postToken } from '../services/token.services';
 
 async function loginController(req: Request, res: Response) {
-  // check if the request body is empty
-  if (!req.body) {
-    return res.status(400).send({
-      message: 'Content can not be empty!'
-    });
+  if (!req.body) { // check if the request is empty
+    return InvalidRequest(req, res, new Error('Request body is empty!'));
   }
   // check if the request have email and password
   if (!req.body.email || !req.body.password) {
-    return res.status(400).send({
-      message: 'email and password are required!'
-    });
+    return InvalidRequest(req, res, new Error('Email or password is missing!'));
   }
 
   const user = await getUserByEmail(req.body.email)
     .catch((err: any) => {
-      return res.status(500).send({
-        message: err.message || 'Some error occurred while retrieving user.'
-      });
+      return DatabaseError(req, res, err);
     });
 
   if (user === null) {
-    return res.status(404).send({
-      message: 'User not found!'
-    });
+    return NoResultError(req, res, new Error('User not found!'));
   }
 
   const { password, id, email } = user as User;
 
   if (password !== req.body.password) {
-    return res.status(401).send({
-      message: 'Invalid password!'
-    });
+    return UnauthorizedError(req, res, new Error('Invalid password!'));
   }
 
   const SECRET_KEY: Secret = 'YaF8BZnNLhhpLSN5dF65qxKgbApPwAqs%nUudVo^X^d5PJ&o!44bPThgYiPW%ABG';
@@ -59,12 +51,10 @@ async function loginController(req: Request, res: Response) {
 
   const postedToken = await postToken(tokenModel)
     .catch((err: any) => {
-      return res.status(500).send({
-        message: err.message || 'Some error occurred while creating the Token.'
-      });
+      return DatabaseError(req, res, err);
     });
 
-  return res.status(200).send({ JWTtoken: token });
+  return SuccessRequested(req, res, { token: token });
 }
 
 export {
