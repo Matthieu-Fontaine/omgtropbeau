@@ -1,40 +1,48 @@
 import { Request, Response } from 'express';
 import { getUserById, getUserByEmail, getUsers, postUser, patchUser, deleteUser } from '../services/user.services';
 
-// TODO : Updgrade error message
+import { DatabaseError, ConflictError } from '../middlewares/error.middleware';
+import { SuccessRequested, SuccessCreated } from '../middlewares/success.middleware';
 
 async function getUserByIdController(req: Request, res: Response) {
   const id = parseInt(req.params.id);
   const user = await getUserById(id)
     .catch((err: any) => {
-      return res.status(500).json(err);
+      return DatabaseError(req, res, err);
     });
-  return res.status(200).json(user);
+  return SuccessRequested(req, res, user)
 }
 
 async function getUsersController(req: Request, res: Response) {
   if (req.query.email) {
     const user = await getUserByEmail(req.query.email as string)
       .catch((err: any) => {
-        return res.status(500).json(err);
+        return DatabaseError(req, res, err);
       });
-    return res.status(200).json(user);
+    return SuccessRequested(req, res, user);
   } else {
     const users = await getUsers()
       .catch((err: any) => {
-        return res.status(500).json(err);
+        return DatabaseError(req, res, err);
       });
-    return res.status(200).json(users);
+    return SuccessRequested(req, res, users);
   }
 }
 
 async function postUserController(req: Request, res: Response) {
   const user = req.body;
+
+  // Vérifier si l'e-mail existe déjà
+  const existingUser = await getUserByEmail(user.email);
+  if (existingUser) {
+    return ConflictError(req, res, new Error('Email already exists'));
+  }
+
   const newUser = await postUser(user)
     .catch((err: any) => {
-      return res.status(500).json(err);
+      return DatabaseError(req, res, err);
     });
-  return res.status(201).json(newUser);
+  return SuccessCreated(req, res, newUser);
 }
 
 async function patchUserController(req: Request, res: Response) {
@@ -42,18 +50,18 @@ async function patchUserController(req: Request, res: Response) {
   const user = req.body;
   const updateUser = await patchUser(id, user)
     .catch((err: any) => {
-      return res.status(500).json(err);
+      return DatabaseError(req, res, err);
     });
-  return res.status(200).json(updateUser);
+  return SuccessRequested(req, res, updateUser);
 }
 
 async function deleteUserController(req: Request, res: Response) {
   const id = parseInt(req.params.id);
   const deletedUser = await deleteUser(id)
     .catch((err: any) => {
-      return res.status(500).json(err);
+      return DatabaseError(req, res, err);
     });
-  return res.status(200).json(deletedUser);
+  return SuccessRequested(req, res, deletedUser);
 }
 
 export {

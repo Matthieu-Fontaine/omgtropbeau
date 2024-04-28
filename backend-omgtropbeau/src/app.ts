@@ -1,8 +1,11 @@
 import express from 'express';
+import cors from 'cors'
 import userRouter from './routes/user.routes';
 import authRouter from './routes/token.routes';
 
 const app = express();
+
+app.use(cors()); // Enable CORS
 
 app.use(express.json());
 

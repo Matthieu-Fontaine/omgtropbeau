@@ -23,11 +23,15 @@ const UnauthorizedError = (req: Request, res: Response, err: any) => {
   res.status(401).json({ error: 'Unauthorized', message: err.message });
 }
 
+const ConflictError = (req: Request, res: Response, err: any) => {
+  res.status(409).json({ error: 'Conflict', message: err.message });
+}
 
 export {
   UnknownRoutes,
   InvalidRequest,
   DatabaseError,
   NoResultError,
-  UnauthorizedError
+  UnauthorizedError,
+  ConflictError
 };
