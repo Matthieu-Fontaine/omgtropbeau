@@ -3,3 +3,4 @@
 /pgdata
 /docker-omgtropbeau/pgdata
 backend-omgtropbeau/.env
+/backend-omgtropbeau/.env

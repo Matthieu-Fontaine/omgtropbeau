@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
+import { JWTSECRETKEY } from '../config/secret_config';
 
 import User from '../models/user.model';
 import Token from '../models/token.model';
@@ -34,14 +35,12 @@ async function loginController(req: Request, res: Response) {
     return UnauthorizedError(req, res, new Error('Invalid password!'));
   }
 
-  const SECRET_KEY: Secret = 'YaF8BZnNLhhpLSN5dF65qxKgbApPwAqs%nUudVo^X^d5PJ&o!44bPThgYiPW%ABG';
-
   const payload: JwtPayload = {
     id: id,
     email: email
   };
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+  const token = jwt.sign(payload, JWTSECRETKEY, { expiresIn: '1h' });
 
   const tokenModel = new Token({
     token: token,

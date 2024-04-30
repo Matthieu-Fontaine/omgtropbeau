@@ -1,14 +1,20 @@
-// config/sequelize.ts
-
 import { Sequelize } from 'sequelize';
+import {
+  SEQUELIZE_DIALECT,
+  SEQUELIZE_HOST,
+  SEQUELIZE_PORT,
+  SEQUELIZE_USERNAME,
+  SEQUELIZE_PASSWORD,
+  SEQUELIZE_DATABASE
+} from './sequelize_config';
 
 const sequelize = new Sequelize({
   dialect: 'postgres',
-  host: 'localhost', // ou l'adresse de votre serveur PostgreSQL
-  port: 5432, // port par défaut de PostgreSQL
-  username: 'matthieu',
-  password: '55D7TCYm3MJaS2L9',
-  database: 'omgtropbeau',
+  host: SEQUELIZE_HOST,
+  port: SEQUELIZE_PORT,
+  username: SEQUELIZE_USERNAME,
+  password: SEQUELIZE_PASSWORD,
+  database: SEQUELIZE_DATABASE,
 });
 
 export default sequelize;
