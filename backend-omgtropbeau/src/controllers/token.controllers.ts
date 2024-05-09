@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { JWTSECRETKEY } from '../config/secret_config';
+import bcrypt from 'bcrypt';
 
 import User from '../models/user.model';
 import Token from '../models/token.model';
@@ -31,7 +32,10 @@ async function loginController(req: Request, res: Response) {
 
   const { password, id, email } = user as User;
 
-  if (password !== req.body.password) {
+
+  const isMatch = await bcrypt.compare(req.body.password, password);
+
+  if (!isMatch) {
     return UnauthorizedError(req, res, new Error('Invalid password!'));
   }
 

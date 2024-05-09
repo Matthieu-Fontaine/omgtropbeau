@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 
 import Header from "../components/Header";
 import SideBar from "../components/SideBar";
-import Connect from "../components/Connect";
 
 const Dashboard: React.FC = () => {
   useEffect(() => {
@@ -14,7 +13,7 @@ const Dashboard: React.FC = () => {
       <Header name='Dashboard' />
       <SideBar />
       <div className='flex-1 p-4'>
-        <Connect />
+
       </div>
     </div>
   );

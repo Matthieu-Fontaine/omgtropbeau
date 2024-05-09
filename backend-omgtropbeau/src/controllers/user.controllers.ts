@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import bcrypt from 'bcrypt';
+
 import { getUserById, getUserByEmail, getUsers, postUser, patchUser, deleteUser } from '../services/user.services';
 
 import { DatabaseError, ConflictError } from '../middlewares/error.middleware';
@@ -38,6 +40,9 @@ async function postUserController(req: Request, res: Response) {
     return ConflictError(req, res, new Error('Email already exists'));
   }
 
+  console.log(user.password);
+  user.password = await bcrypt.hash(user.password, 10);
+
   const newUser = await postUser(user)
     .catch((err: any) => {
       return DatabaseError(req, res, err);
@@ -48,6 +53,12 @@ async function postUserController(req: Request, res: Response) {
 async function patchUserController(req: Request, res: Response) {
   const id = parseInt(req.params.id);
   const user = req.body;
+
+  // Encrypter le mot de passe
+  if (user.password) {
+    user.password = await bcrypt.hash(user.password, 10);
+  }
+
   const updateUser = await patchUser(id, user)
     .catch((err: any) => {
       return DatabaseError(req, res, err);
